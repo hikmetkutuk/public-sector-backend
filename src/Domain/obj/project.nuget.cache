@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "H6YSrxqMUmA=",
+  "dgSpecHash": "dM6+BOauWAc=",
   "success": true,
   "projectFilePath": "C:\\Users\\HIKMET.KUTUK\\Documents\\projects\\public-sector\\backend\\src\\Domain\\Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\idgen\\3.0.7\\idgen.3.0.7.nupkg.sha512"
+  ],
   "logs": []
 }
