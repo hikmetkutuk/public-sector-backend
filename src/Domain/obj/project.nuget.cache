@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "dM6+BOauWAc=",
+  "dgSpecHash": "ATqYlzlWKr8=",
   "success": true,
   "projectFilePath": "C:\\Users\\HIKMET.KUTUK\\Documents\\projects\\public-sector\\backend\\src\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\idgen\\3.0.7\\idgen.3.0.7.nupkg.sha512"
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\idgen\\3.0.7\\idgen.3.0.7.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512"
   ],
   "logs": []
 }

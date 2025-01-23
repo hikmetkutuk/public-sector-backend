@@ -3,7 +3,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities;
 
-public class User : BaseEntity
+public sealed class User : BaseEntity
 {
     public Email Email { get; set; }
     public FullName FullName { get; set; }

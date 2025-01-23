@@ -1,0 +1,2 @@
+dotnet new sln -n PublicSector
+dotnet new webapi --use-controllers -o Web 

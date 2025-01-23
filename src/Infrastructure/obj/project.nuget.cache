@@ -1,8 +1,26 @@
 {
   "version": 2,
-  "dgSpecHash": "gRocj1xGa3k=",
+  "dgSpecHash": "Jf82j2Z1Bew=",
   "success": true,
   "projectFilePath": "C:\\Users\\HIKMET.KUTUK\\Documents\\projects\\public-sector\\backend\\src\\Infrastructure\\Infrastructure.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\idgen\\3.0.7\\idgen.3.0.7.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.1\\microsoft.entityframeworkcore.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.1\\microsoft.entityframeworkcore.abstractions.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.1\\microsoft.entityframeworkcore.analyzers.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.1\\microsoft.extensions.caching.abstractions.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.1\\microsoft.extensions.caching.memory.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.1\\microsoft.extensions.dependencyinjection.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.1\\microsoft.extensions.dependencyinjection.abstractions.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.logging\\9.0.1\\microsoft.extensions.logging.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.1\\microsoft.extensions.logging.abstractions.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.options\\9.0.1\\microsoft.extensions.options.9.0.1.nupkg.sha512",
+    "C:\\Users\\HIKMET.KUTUK\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.1\\microsoft.extensions.primitives.9.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
