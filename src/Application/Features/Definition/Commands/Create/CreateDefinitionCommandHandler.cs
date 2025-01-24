@@ -1,12 +1,13 @@
 using Application.Common.Interfaces;
+using Application.Common.Models.Responses;
 using MediatR;
 
 namespace Application.Features.Definition.Commands.Create;
 
 public sealed class CreateDefinitionCommandHandler(IApplicationDbContext dbContext)
-    : IRequestHandler<CreateDefinitionCommand, Guid>
+    : IRequestHandler<CreateDefinitionCommand, ResponseDto<Guid>>
 {
-    public async Task<Guid> Handle(CreateDefinitionCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseDto<Guid>> Handle(CreateDefinitionCommand request, CancellationToken cancellationToken)
     {
         var definition = Domain.Entities.Definition.Create(request.Name, request.Type, request.Code, request.ParentId);
 
@@ -14,6 +15,6 @@ public sealed class CreateDefinitionCommandHandler(IApplicationDbContext dbConte
 
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        return definition.Id;
+        return ResponseDto<Guid>.Success(definition.Id, "Definition created successfully.");
     }
 }
