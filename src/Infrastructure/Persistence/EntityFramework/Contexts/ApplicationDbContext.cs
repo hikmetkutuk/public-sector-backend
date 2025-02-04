@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.EntityFramework.Contexts;
 
-public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
+public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : DbContext(options), IApplicationDbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Definition> Definitions { get; set; }
