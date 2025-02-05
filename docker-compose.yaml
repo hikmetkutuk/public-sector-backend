@@ -1,0 +1,28 @@
+services:
+  db:
+    container_name: public-sector-db
+    image: postgres:17.2
+    environment:
+      POSTGRES_USER: ps
+      POSTGRES_PASSWORD: ps
+      PGDATA: /data/postgres
+    volumes:
+      - ./data/:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+  pgadmin:
+    container_name: public-sector-pgadmin
+    image: dpage/pgadmin4:8.14.0
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - data-pgadmin-service:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+
+volumes:
+  data-pgadmin-service:
