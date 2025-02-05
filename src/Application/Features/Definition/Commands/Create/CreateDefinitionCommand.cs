@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Application.Features.Definition.Commands.Create;
 
-public sealed record CreateDefinitionCommand(string Name, DefinitionType Type, string Code, Domain.Entities.Definition ParentId) : IRequest<ResponseDto<Guid>>;
+public sealed record CreateDefinitionCommand(string Name, DefinitionType Type, string Code, Guid? ParentId) : IRequest<ResponseDto<Guid>>;

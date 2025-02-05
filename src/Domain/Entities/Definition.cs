@@ -11,7 +11,7 @@ public sealed class Definition : BaseEntity
     public string Code { get; private set; }
     public string Name { get; private set; }
 
-    public static Definition Create(string name, DefinitionType type, string code, Definition requestParentId,
+    public static Definition Create(string name, DefinitionType type, string code, Guid? requestParentId,
         Guid? parentId = null)
     {
         return new Definition
