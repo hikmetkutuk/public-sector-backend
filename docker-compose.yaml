@@ -11,6 +11,7 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+    
   pgadmin:
     container_name: public-sector-pgadmin
     image: dpage/pgadmin4:8.14.0
@@ -23,6 +24,18 @@ services:
     ports:
       - "5050:80"
     restart: unless-stopped
+    
+  redis:
+    container_name: public-sector-redis
+    image: redis:7.4.2
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: [ "redis-server" ]
 
 volumes:
   data-pgadmin-service:

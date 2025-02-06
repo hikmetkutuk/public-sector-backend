@@ -2,6 +2,7 @@ using Application.Common.Interfaces;
 using Infrastructure.Persistence.Dapper;
 using Infrastructure.Persistence.EntityFramework.Contexts;
 using Infrastructure.Persistence.EntityFramework.Interceptors;
+using Infrastructure.Redis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,9 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
+        var redisConnectionString = configuration.GetSection("Redis")["ConnectionString"];
+        services.AddSingleton<IRedisCache>(new RedisCache(redisConnectionString));
 
         return services;
     }
