@@ -1,4 +1,8 @@
+## Core
 dotnet new sln -n PublicSector
 dotnet new webapi --use-controllers -o Web 
 dotnet ef migrations add InitialCreate --project .\Infrastructure\ --startup-project .\Web\
 dotnet ef database update --project .\Infrastructure\ --startup-project .\Web\
+
+## Redis
+redis-cli FLUSHALL
