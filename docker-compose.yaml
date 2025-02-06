@@ -36,6 +36,17 @@ services:
       timeout: 3s
       retries: 5
     command: [ "redis-server" ]
+  
+  redis-insight:
+    container_name: public-sector-redisinsight
+    image: redis/redisinsight:2.66
+    environment:
+      - REDISINSIGHT_PASSWORD=ps
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    restart: unless-stopped
 
 volumes:
   data-pgadmin-service:
