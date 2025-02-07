@@ -8,4 +8,16 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     : DbContext(options), IApplicationDbContext
 {
     public DbSet<Definition> Definitions { get; set; }
+    public DbSet<Organisation> Organisations { get; set; }
+    public DbSet<OrganisationLog> OrganisationLogs { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Organisation>()
+            .HasOne(o => o.ConvertedFrom)
+            .WithMany()
+            .HasForeignKey(o => o.ConvertedFromId);
+    }
 }
