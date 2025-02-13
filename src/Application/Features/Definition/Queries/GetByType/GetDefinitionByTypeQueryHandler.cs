@@ -1,5 +1,7 @@
+using System.Data;
 using Application.Common.Interfaces;
 using Dapper;
+using Domain.Enums;
 using MediatR;
 
 namespace Application.Features.Definition.Queries.GetByType;
@@ -24,17 +26,30 @@ public sealed class GetDefinitionByTypeQueryHandler(ISqlConnectionFactory sqlCon
         {
             using var connection = sqlConnectionFactory.CreateConnection();
             var sql = @"
-                SELECT id, name 
-                FROM definitions 
-                WHERE type = @Type 
-                ORDER BY name
-            ";
-            var definitions = await connection.QueryAsync<GetDefinitionByTypeDto>(
-                sql,
-                new { request.Type }
-            );
+            SELECT 
+                d.id, 
+                d.name, 
+                d.type, 
+                d.parent_id,
+                p.name AS parent_name
+            FROM definitions d
+            LEFT JOIN definitions p ON d.parent_id = p.id
+            WHERE d.type = @Type
+            ORDER BY d.name";
 
-            var getDefinitionByTypeDtos = definitions.ToList();
+            var definitions =
+                await connection.QueryAsync<dynamic>(sql, new { request.Type }, commandType: CommandType.Text);
+
+            var getDefinitionByTypeDtos = definitions.Select(d => new GetDefinitionByTypeDto
+            {
+                Id = d.id,
+                Name = d.name,
+                Type = d.type,
+                ParentId = d.parent_id,
+                ParentName = d.parent_name
+            }).ToList();
+
+
             if (getDefinitionByTypeDtos.Any())
             {
                 await redisCache.SetAsync(cacheKey, getDefinitionByTypeDtos, TimeSpan.FromMinutes(10));

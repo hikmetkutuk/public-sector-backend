@@ -27,7 +27,9 @@ public sealed class CreateDefinitionCommandHandler(IApplicationDbContext dbConte
                 cachedData.Add(new GetDefinitionByTypeDto
                 {
                     Id = definition.Id,
-                    Name = definition.Name
+                    Name = definition.Name,
+                    Type = (int)definition.Type,
+                    ParentId = definition.ParentId,
                 });
 
                 await redisCache.SetAsync(cacheKey, cachedData, TimeSpan.FromMinutes(10));
