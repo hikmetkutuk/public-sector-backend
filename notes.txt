@@ -6,3 +6,6 @@ dotnet ef database update --project .\Infrastructure\ --startup-project .\Web\
 
 ## Redis
 redis-cli FLUSHALL
+
+## Docker
+docker compose up --build -d
