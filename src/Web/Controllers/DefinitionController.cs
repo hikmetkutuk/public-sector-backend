@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Application.Common.Models.Responses;
 using Application.Features.Definition.Commands.Create;
 using Application.Features.Definition.Queries.GetByType;
@@ -30,5 +31,29 @@ public class DefinitionController(IMediator mediator) : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    [HttpGet("enum")]
+    public IActionResult GetEnumDefinitions()
+    {
+        var enumDefinitions = Enum.GetValues(typeof(DefinitionType))
+            .Cast<DefinitionType>()
+            .ToDictionary(
+                value => value.ToString(),
+                value => new
+                {
+                    Value = (int)value,
+                    Description = GetEnumDescription(value)
+                }
+            );
+
+        return Ok(enumDefinitions);
+    }
+
+    private string GetEnumDescription(DefinitionType value)
+    {
+        var field = value.GetType().GetField(value.ToString());
+        var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+        return attribute?.Description ?? value.ToString();
     }
 }
