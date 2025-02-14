@@ -1,4 +1,5 @@
 using Domain.Enums;
+using Domain.Extensions;
 
 namespace Application.Features.Definition.Queries.GetByType;
 
@@ -10,5 +11,5 @@ public sealed record GetDefinitionByTypeDto
     public Guid? ParentId { get; init; }
     public string ParentName { get; init; }
 
-    public string TypeText => Enum.GetName(typeof(DefinitionType), Type) ?? "Unknown";
+    public string TypeText => ((DefinitionType)Type).GetDescription();
 }

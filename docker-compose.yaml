@@ -18,7 +18,6 @@ services:
       timeout: 5s
       retries: 5
   
-  
   pgadmin:
     container_name: public-sector-pgadmin
     image: dpage/pgadmin4:8.14.0

@@ -3,6 +3,7 @@ using Application.Common.Models.Responses;
 using Application.Features.Definition.Commands.Create;
 using Application.Features.Definition.Queries.GetByType;
 using Domain.Enums;
+using Domain.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,17 +44,10 @@ public class DefinitionController(IMediator mediator) : ControllerBase
                 value => new
                 {
                     Value = (int)value,
-                    Description = GetEnumDescription(value)
+                    Description = value.GetDescription()
                 }
             );
 
         return Ok(enumDefinitions);
-    }
-
-    private string GetEnumDescription(DefinitionType value)
-    {
-        var field = value.GetType().GetField(value.ToString());
-        var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
-        return attribute?.Description ?? value.ToString();
     }
 }
