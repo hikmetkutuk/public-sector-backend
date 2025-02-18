@@ -6,7 +6,7 @@ public enum DefinitionType
 {
     [Description("Fakülte")] Faculty = 1,
 
-    [Description("Fakülte Departmanı")] FacultyDepartment = 2,
+    [Description("Fakülte Bölümü")] FacultyDepartment = 2,
 
     [Description("Dosya Kodu")] FileCode = 3,
 

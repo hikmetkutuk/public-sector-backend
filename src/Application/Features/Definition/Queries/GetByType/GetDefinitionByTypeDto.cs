@@ -5,11 +5,12 @@ namespace Application.Features.Definition.Queries.GetByType;
 
 public sealed record GetDefinitionByTypeDto
 {
-    public Guid Id { get; init; }
-    public string Name { get; init; }
-    public int Type { get; init; }
-    public Guid? ParentId { get; init; }
-    public string ParentName { get; init; }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Code { get; set; }
+    public int Type { get; set; }
+    public Guid? ParentId { get; set; }
+    public string ParentName { get; set; }
 
     public string TypeText => ((DefinitionType)Type).GetDescription();
 }

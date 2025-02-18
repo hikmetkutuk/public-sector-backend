@@ -1,5 +1,7 @@
 using Domain.Common;
 using Domain.Enums;
+using Domain.Events;
+using Domain.Helpers;
 
 namespace Domain.Entities;
 
@@ -20,8 +22,19 @@ public sealed class Definition : BaseEntity
             Type = type,
             Code = code,
             ParentId = parentId,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTimeHelper.GetTurkeyTime()
         };
+    }
+
+    public void Update(string name, DefinitionType type, string code, Guid? parentId)
+    {
+        Name = name;
+        Type = type;
+        Code = code;
+        ParentId = parentId;
+        ModifiedAt = DateTimeHelper.GetTurkeyTime();
+
+        AddDomainEvent(new DefinitionUpdatedEvent(this));
     }
 
     public void SetParent(Definition? parent)

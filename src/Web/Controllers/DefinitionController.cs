@@ -1,6 +1,6 @@
-using System.ComponentModel;
 using Application.Common.Models.Responses;
 using Application.Features.Definition.Commands.Create;
+using Application.Features.Definition.Commands.Update;
 using Application.Features.Definition.Queries.GetByType;
 using Domain.Enums;
 using Domain.Extensions;
@@ -49,5 +49,16 @@ public class DefinitionController(IMediator mediator) : ControllerBase
             );
 
         return Ok(enumDefinitions);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<ResponseDto<Guid>>> UpdateDefinition(Guid id,
+        [FromBody] UpdateDefinitionCommand command)
+    {
+        var updatedCommand = command with { Id = id };
+
+        var response = await mediator.Send(updatedCommand);
+
+        return response.IsSuccess ? Ok(response) : BadRequest(response);
     }
 }

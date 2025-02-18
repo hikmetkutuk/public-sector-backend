@@ -9,3 +9,8 @@ redis-cli FLUSHALL
 
 ## Docker
 docker compose up --build -d
+
+## Domain Event - Handler
+Separation of Concerns
+Event Driven Architecture
+Easy Maintenance
