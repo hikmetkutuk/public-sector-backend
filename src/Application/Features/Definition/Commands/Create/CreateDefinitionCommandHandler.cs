@@ -7,6 +7,7 @@ namespace Application.Features.Definition.Commands.Create;
 
 public sealed class CreateDefinitionCommandHandler(
     IApplicationDbContext dbContext,
+    IRedisCache redisCache,
     IMediator mediator)
     : IRequestHandler<CreateDefinitionCommand, ResponseDto<Guid>>
 {

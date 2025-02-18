@@ -35,7 +35,7 @@ public class DefinitionUpdatedEventHandler(IRedisCache redisCache, ILogger<Defin
             }
 
             logger.LogInformation(
-                "Cache for Definition updated. Id: {DefinitionId}, Name: {DefinitionName}, Type: {DefinitionType}",
+                "Definition updated. Id: {DefinitionId}, Name: {DefinitionName}, Type: {DefinitionType}",
                 definition.Id, definition.Name, definition.Type);
         }
         catch (Exception ex)

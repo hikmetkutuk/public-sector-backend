@@ -1,5 +1,6 @@
 using Application.Common.Models.Responses;
 using Application.Features.Definition.Commands.Create;
+using Application.Features.Definition.Commands.Delete;
 using Application.Features.Definition.Commands.Update;
 using Application.Features.Definition.Queries.GetByType;
 using Domain.Enums;
@@ -58,6 +59,15 @@ public class DefinitionController(IMediator mediator) : ControllerBase
         var updatedCommand = command with { Id = id };
 
         var response = await mediator.Send(updatedCommand);
+
+        return response.IsSuccess ? Ok(response) : BadRequest(response);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult<ResponseDto<Guid>>> DeleteDefinition(Guid id)
+    {
+        var command = new DeleteDefinitionCommand(id);
+        var response = await mediator.Send(command);
 
         return response.IsSuccess ? Ok(response) : BadRequest(response);
     }

@@ -1,6 +1,5 @@
 using Domain.Common;
 using Domain.Enums;
-using Domain.Events;
 using Domain.Helpers;
 
 namespace Domain.Entities;
@@ -26,8 +25,6 @@ public sealed class Definition : BaseEntity
             IsActive = true
         };
 
-        definition.AddDomainEvent(new DefinitionCreatedEvent(definition));
-
         return definition;
     }
 
@@ -38,8 +35,6 @@ public sealed class Definition : BaseEntity
         Code = code;
         ParentId = parentId;
         ModifiedAt = DateTimeHelper.GetTurkeyTime();
-
-        AddDomainEvent(new DefinitionUpdatedEvent(this));
     }
 
     public void SetParent(Definition? parent)
