@@ -3,36 +3,28 @@ using Domain.Helpers;
 
 namespace Web.Services;
 
-public sealed class CurrentUserManager : ICurrentUserService
+public sealed class CurrentUserManager(IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env)
+    : ICurrentUserService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IWebHostEnvironment _env;
-
-    public CurrentUserManager(IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env)
-    {
-        _httpContextAccessor = httpContextAccessor;
-        _env = env;
-    }
-
     public Guid UserId => GetUserId();
 
     public string IpAddress => GetIpAddress();
 
     private Guid GetUserId()
     {
-        var userId = _httpContextAccessor.HttpContext?.User.FindFirst("uid")?.Value;
+        var userId = httpContextAccessor.HttpContext?.User.FindFirst("uid")?.Value;
 
         return userId is null ? Guid.Empty : Guid.Parse(userId);
     }
 
     private string GetIpAddress()
     {
-        if (_env.IsDevelopment())
+        if (env.IsDevelopment())
             return IpHelper.GetIpAddress();
 
-        if (_httpContextAccessor.HttpContext.Request.Headers.ContainsKey("X-Forwarded-For"))
-            return _httpContextAccessor.HttpContext.Request.Headers["X-Forwarded-For"];
+        if (httpContextAccessor.HttpContext.Request.Headers.ContainsKey("X-Forwarded-For"))
+            return httpContextAccessor.HttpContext.Request.Headers["X-Forwarded-For"];
         else
-            return _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
+            return httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
     }
 }

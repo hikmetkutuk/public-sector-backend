@@ -13,8 +13,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>(provider =>
-            new SqlConnectionFactory(configuration.GetConnectionString("DefaultConnection")));
+        services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>(_ =>
+            new SqlConnectionFactory(configuration.GetConnectionString("DefaultConnection") ??
+                                     throw new InvalidOperationException()));
 
         services.AddScoped<EntityInterceptor>();
 
@@ -29,7 +30,7 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
         var redisConnectionString = configuration.GetSection("Redis")["ConnectionString"];
-        services.AddSingleton<IRedisCache>(new RedisCache(redisConnectionString));
+        if (redisConnectionString != null) services.AddSingleton<IRedisCache>(new RedisCache(redisConnectionString));
 
         return services;
     }

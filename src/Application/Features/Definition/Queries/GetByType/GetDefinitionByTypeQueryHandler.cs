@@ -1,7 +1,6 @@
 using System.Data;
 using Application.Common.Interfaces;
 using Dapper;
-using Domain.Enums;
 using MediatR;
 
 namespace Application.Features.Definition.Queries.GetByType;

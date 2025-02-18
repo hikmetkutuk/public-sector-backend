@@ -6,15 +6,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.Persistence.EntityFramework.Interceptors;
 
-public sealed class EntityInterceptor : SaveChangesInterceptor
+public sealed class EntityInterceptor(ICurrentUserService currentUserService) : SaveChangesInterceptor
 {
-    private readonly ICurrentUserService _currentUserService;
-
-    public EntityInterceptor(ICurrentUserService currentUserService)
-    {
-        _currentUserService = currentUserService;
-    }
-
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
         UpdateEntities(eventData.Context);
@@ -43,17 +36,17 @@ public sealed class EntityInterceptor : SaveChangesInterceptor
 
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.CreatedByUserId = _currentUserService.UserId == Guid.Empty
+                    entry.Entity.CreatedByUserId = currentUserService.UserId == Guid.Empty
                         ? null
-                        : _currentUserService.UserId.ToString();
+                        : currentUserService.UserId.ToString();
                     entry.Entity.CreatedAt = utcNow;
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
-                    entry.Entity.ModifiedByUserId = _currentUserService.UserId == Guid.Empty
+                    entry.Entity.ModifiedByUserId = currentUserService.UserId == Guid.Empty
                         ? null
-                        : _currentUserService.UserId.ToString();
+                        : currentUserService.UserId.ToString();
                     entry.Entity.ModifiedAt = utcNow;
                 }
             }
