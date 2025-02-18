@@ -1,11 +1,13 @@
 using Application.Common.Interfaces;
 using Application.Common.Models.Responses;
-using Application.Features.Definition.Queries.GetByType;
+using Domain.Events;
 using MediatR;
 
 namespace Application.Features.Definition.Commands.Create;
 
-public sealed class CreateDefinitionCommandHandler(IApplicationDbContext dbContext, IRedisCache redisCache)
+public sealed class CreateDefinitionCommandHandler(
+    IApplicationDbContext dbContext,
+    IMediator mediator)
     : IRequestHandler<CreateDefinitionCommand, ResponseDto<Guid>>
 {
     public async Task<ResponseDto<Guid>> Handle(CreateDefinitionCommand request, CancellationToken cancellationToken)
@@ -14,27 +16,12 @@ public sealed class CreateDefinitionCommandHandler(IApplicationDbContext dbConte
 
         dbContext.Definitions.Add(definition);
 
-        var cacheKey = $"definition:type:{request.Type}";
-
         try
         {
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            var cachedData = await redisCache.GetAsync<List<GetDefinitionByTypeDto>>(cacheKey);
-
-            if (cachedData != null)
-            {
-                cachedData.Add(new GetDefinitionByTypeDto
-                {
-                    Id = definition.Id,
-                    Name = definition.Name,
-                    Type = (int)definition.Type,
-                    ParentId = definition.ParentId,
-                });
-
-                await redisCache.SetAsync(cacheKey, cachedData, TimeSpan.FromMinutes(10));
-            }
-
+            // 📌 Publish Event
+            await mediator.Publish(new DefinitionCreatedEvent(definition), cancellationToken);
 
             return ResponseDto<Guid>.Success(definition.Id, "Definition created successfully.");
         }

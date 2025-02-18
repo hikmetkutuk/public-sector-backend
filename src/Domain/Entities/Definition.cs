@@ -15,15 +15,20 @@ public sealed class Definition : BaseEntity
 
     public static Definition Create(string name, DefinitionType type, string code, Guid? parentId)
     {
-        return new Definition
+        var definition = new Definition
         {
             Id = Guid.CreateVersion7(),
             Name = name,
             Type = type,
             Code = code,
             ParentId = parentId,
-            CreatedAt = DateTimeHelper.GetTurkeyTime()
+            CreatedAt = DateTimeHelper.GetTurkeyTime(),
+            IsActive = true
         };
+
+        definition.AddDomainEvent(new DefinitionCreatedEvent(definition));
+
+        return definition;
     }
 
     public void Update(string name, DefinitionType type, string code, Guid? parentId)
@@ -39,15 +44,7 @@ public sealed class Definition : BaseEntity
 
     public void SetParent(Definition? parent)
     {
-        if (parent == null)
-        {
-            Parent = null;
-            ParentId = Guid.Empty;
-        }
-        else
-        {
-            Parent = parent;
-            ParentId = parent.Id;
-        }
+        Parent = parent;
+        ParentId = parent?.Id ?? Guid.Empty;
     }
 }
