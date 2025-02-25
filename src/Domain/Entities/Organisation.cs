@@ -35,12 +35,14 @@ public class Organisation : BaseEntity
     public ICollection<Organisation> Children { get; private set; } = new List<Organisation>();
     public ICollection<OrganisationLog> OrganisationLogs { get; private set; } = new List<OrganisationLog>();
 
-    private Organisation() { }
+    private Organisation()
+    {
+    }
 
     public static Organisation Create(
-        string name, string? latitude, string? longitude, string? address, string? phoneNumber, 
-        byte? centerClass, LocalStatus? localStatus, int? atmCount, int? branchCount, 
-        DistributionStatus? distributionStatus, int? wageTakeMachine, int? wagePayMachine, 
+        string name, string? latitude, string? longitude, string? address, string? phoneNumber,
+        byte? centerClass, LocalStatus? localStatus, int? atmCount, int? branchCount,
+        DistributionStatus? distributionStatus, int? wageTakeMachine, int? wagePayMachine,
         DateTime? documentDate, int? documentNumber, string? note, OrganisationType? organisationType,
         Guid? geographicRegionDefId, Guid? procedureRegionDefId,
         string? email, Guid? parentId = null, Guid? convertedFromId = null)
