@@ -1,10 +1,11 @@
 using Application.Common.Interfaces;
 using Application.Features.Definition.Queries.GetByType;
 using Domain.Events;
+using Domain.Events.Definition;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Events;
+namespace Application.Events.Definition;
 
 public sealed class DefinitionDeletedEventHandler(IRedisCache redisCache, ILogger<DefinitionDeletedEventHandler> logger)
     : INotificationHandler<DefinitionDeletedEvent>

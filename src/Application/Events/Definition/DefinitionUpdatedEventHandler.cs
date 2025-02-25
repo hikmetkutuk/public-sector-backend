@@ -1,15 +1,16 @@
 using Application.Common.Interfaces;
 using Application.Features.Definition.Queries.GetByType;
 using Domain.Events;
+using Domain.Events.Definition;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Events;
+namespace Application.Events.Definition;
 
-public sealed class DefinitionCreatedEventHandler(IRedisCache redisCache, ILogger<DefinitionCreatedEventHandler> logger)
-    : INotificationHandler<DefinitionCreatedEvent>
+public class DefinitionUpdatedEventHandler(IRedisCache redisCache, ILogger<DefinitionUpdatedEventHandler> logger)
+    : INotificationHandler<DefinitionUpdatedEvent>
 {
-    public async Task Handle(DefinitionCreatedEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(DefinitionUpdatedEvent notification, CancellationToken cancellationToken)
     {
         var definition = notification.Definition;
         var cacheKey = $"definition:type:{definition.Type}";
@@ -21,26 +22,26 @@ public sealed class DefinitionCreatedEventHandler(IRedisCache redisCache, ILogge
 
             if (cachedData != null)
             {
-                cachedData.Add(new GetDefinitionByTypeDto
+                var existingItem = cachedData.FirstOrDefault(d => d.Id == definition.Id);
+                if (existingItem != null)
                 {
-                    Id = definition.Id,
-                    Name = definition.Name,
-                    Type = (int)definition.Type,
-                    Code = definition.Code,
-                    ParentId = definition.ParentId
-                });
+                    existingItem.Name = definition.Name;
+                    existingItem.Type = (int)definition.Type;
+                    existingItem.Code = existingItem.Code;
+                    existingItem.ParentId = definition.ParentId;
+                }
 
                 // 📌 Update cache
                 await redisCache.SetAsync(cacheKey, cachedData, TimeSpan.FromMinutes(10));
             }
 
-            // 📌 Adding a log record
             logger.LogInformation(
-                "Definition created. Id: {DefinitionId}, Name: {DefinitionName}, Type: {DefinitionType}",
+                "Definition updated. Id: {DefinitionId}, Name: {DefinitionName}, Type: {DefinitionType}",
                 definition.Id, definition.Name, definition.Type);
         }
         catch (Exception ex)
         {
+            // 📌 Error log
             logger.LogError(ex, "An error occurred while updating cache for definition Id: {DefinitionId}",
                 definition.Id);
         }

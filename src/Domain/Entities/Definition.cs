@@ -21,8 +21,7 @@ public sealed class Definition : BaseEntity
             Type = type,
             Code = code,
             ParentId = parentId,
-            CreatedAt = DateTimeHelper.GetTurkeyTime(),
-            IsActive = true
+            CreatedAt = DateTimeHelper.GetTurkeyTime()
         };
 
         return definition;
