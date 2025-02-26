@@ -4,21 +4,22 @@ namespace Domain.Enums;
 
 public enum OrganisationType
 {
-    Category = 0,
+    [Description("Fakülte")] Category = 0,
 
-    Headquarters = 1, // Merkez
+    [Description("Merkez")] Headquarters = 1,
 
-    DepartmentDirectorate = 2, // Daire Başkanlığı
+    [Description("Daire Başkanlığı")] DepartmentDirectorate = 2,
 
-    DepartmentSection = 3, // Daire Başkanlığı Müdürlük
+    [Description("Daire Başkanlığı Müdürlük")]
+    DepartmentSection = 3,
 
-    ProvincialDirectorate = 11, // Başmüdürlük
+    [Description("Başmüdürlük")] ProvincialDirectorate = 11,
 
-    Directorate = 12, // Müdürlük
+    [Description("Müdürlük")] Directorate = 12,
 
-    SectionDirectorate = 13, // Kısım Müdürlüğü
+    [Description("Kısım Müdürlüğü")] SectionDirectorate = 13,
 
-    Branch = 14, // Şube
+    [Description("Şube")] Branch = 14,
 
-    ChiefUnit = 15, // Şeflik
+    [Description("Şeflik")] ChiefUnit = 15,
 }
