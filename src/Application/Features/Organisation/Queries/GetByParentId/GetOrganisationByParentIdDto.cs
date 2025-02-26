@@ -11,7 +11,7 @@ public record GetOrganisationByParentIdDto
     public string? Longitude { get; set; }
     public string? Address { get; set; }
     public string? PhoneNumber { get; set; }
-    public int OrganisationType { get; set; }
+    public OrganisationType OrganisationType { get; set; }
     public Guid? ParentId { get; set; }
     public string? ParentName { get; set; }
     public string? Email { get; set; }
@@ -30,5 +30,5 @@ public record GetOrganisationByParentIdDto
     public string? GeographicRegionDefName { get; set; }
     public string? ProcedureRegionDefName { get; set; }
 
-    public string TypeText => ((OrganisationType)OrganisationType).GetDescription();
+    public string TypeText => (OrganisationType).GetDescription();
 }

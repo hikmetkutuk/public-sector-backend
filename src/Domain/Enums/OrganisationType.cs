@@ -4,9 +4,9 @@ namespace Domain.Enums;
 
 public enum OrganisationType
 {
-    [Description("Fakülte")] Category = 0,
+    [Description("Kategori")] Category = 0,
 
-    [Description("Merkez")] Headquarters = 1,
+    [Description("Başlık")] Title = 1,
 
     [Description("Daire Başkanlığı")] DepartmentDirectorate = 2,
 

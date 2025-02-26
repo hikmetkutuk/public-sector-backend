@@ -24,6 +24,7 @@ public sealed class GetOrganisationByParentIdHandler(
         var cachedData = await redisCache.GetAsync<IEnumerable<GetOrganisationByParentIdDto>>(cacheKey);
         if (cachedData != null && cachedData.Any())
         {
+            logger.LogInformation("Retrieved {Count} items from cache with key: {CacheKey}", cachedData.Count(), cacheKey);
             return cachedData.ToList();
         }
 
