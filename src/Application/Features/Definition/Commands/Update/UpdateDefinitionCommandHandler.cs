@@ -1,6 +1,5 @@
 using Application.Common.Interfaces;
 using Application.Common.Models.Responses;
-using Domain.Events;
 using Domain.Events.Definition;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

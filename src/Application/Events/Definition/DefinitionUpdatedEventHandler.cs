@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Events.Definition;
 
-public class DefinitionUpdatedEventHandler(IRedisCache redisCache, ILogger<DefinitionUpdatedEventHandler> logger)
+public sealed class DefinitionUpdatedEventHandler(IRedisCache redisCache, ILogger<DefinitionUpdatedEventHandler> logger)
     : INotificationHandler<DefinitionUpdatedEvent>
 {
     public async Task Handle(DefinitionUpdatedEvent notification, CancellationToken cancellationToken)

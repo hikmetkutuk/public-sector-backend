@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Events.Organisation;
 
-public class OrganisationCreatedEventHandler(IRedisCache redisCache, ILogger<OrganisationCreatedEventHandler> logger)
+public sealed class OrganisationCreatedEventHandler(IRedisCache redisCache, ILogger<OrganisationCreatedEventHandler> logger)
     : INotificationHandler<OrganisationCreatedEvent>
 {
     public async Task Handle(OrganisationCreatedEvent notification, CancellationToken cancellationToken)

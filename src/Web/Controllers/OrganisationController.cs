@@ -1,5 +1,6 @@
 using Application.Common.Models.Responses;
 using Application.Features.Organisation.Commands.Create;
+using Application.Features.Organisation.Commands.Update;
 using Application.Features.Organisation.Queries.GetByParentId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -34,5 +35,14 @@ public class OrganisationController(IMediator mediator) : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<ResponseDto<Guid>>> UpdateOrganisation(Guid id,
+        [FromBody] UpdateOrganisationCommand command)
+    {
+        var updatedCommand = command with { Id = id };
+        var response = await mediator.Send(updatedCommand);
+        return response.IsSuccess ? Ok(response) : BadRequest(response);
     }
 }
