@@ -7,16 +7,52 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Events.Organisation;
 
-public sealed class OrganisationCreatedEventHandler(IRedisCache redisCache, ILogger<OrganisationCreatedEventHandler> logger)
+public sealed class OrganisationCreatedEventHandler(
+    IRedisCache redisCache,
+    ILogger<OrganisationCreatedEventHandler> logger)
     : INotificationHandler<OrganisationCreatedEvent>
 {
     public async Task Handle(OrganisationCreatedEvent notification, CancellationToken cancellationToken)
     {
         var organisation = notification.Organisation;
-        var cacheKeyById = $"organisation:id:{organisation.Id}";
+        var cacheKey = $"organisation:id:{organisation.Id}";
 
         try
         {
+            // 📌 Fetch data from cache
+            var cachedData = await redisCache.GetAsync<List<GetOrganisationByParentIdDto>>(cacheKey);
+
+            if (cachedData != null)
+            {
+                cachedData.Add(new GetOrganisationByParentIdDto
+                {
+                    Id = organisation.Id,
+                    Name = organisation.Name,
+                    OrganisationType = (OrganisationType)organisation.OrganisationType!,
+                    ParentId = organisation.ParentId,
+                    Address = organisation.Address,
+                    Email = organisation.Email,
+                    PhoneNumber = organisation.PhoneNumber,
+                    Latitude = organisation.Latitude,
+                    Longitude = organisation.Longitude,
+                    CenterClass = organisation.CenterClass,
+                    LocalStatus = (int?)organisation.LocalStatus,
+                    AtmCount = organisation.AtmCount,
+                    BranchCount = organisation.BranchCount,
+                    DistributionStatus = (int?)organisation.DistributionStatus,
+                    WageTakeMachine = organisation.WageTakeMachine,
+                    WagePayMachine = organisation.WagePayMachine,
+                    DocumentDate = organisation.DocumentDate,
+                    DocumentNumber = organisation.DocumentNumber,
+                    Note = organisation.Note,
+                    GeographicRegionDefId = organisation.GeographicRegionDefId,
+                    ProcedureRegionDefId = organisation.ProcedureRegionDefId,
+                });
+
+                // 📌 Update cache
+                await redisCache.SetAsync(cacheKey, cachedData, TimeSpan.FromMinutes(10));
+            }
+
             logger.LogInformation(
                 "Organisation created. Id: {OrganisationId}, Name: {OrganisationName}, Type: {OrganisationType}, ParentId: {ParentId}",
                 organisation.Id, organisation.Name, organisation.OrganisationType, organisation.ParentId);
@@ -29,8 +65,8 @@ public sealed class OrganisationCreatedEventHandler(IRedisCache redisCache, ILog
                 OrganisationType = (OrganisationType)organisation.OrganisationType!,
                 ParentId = organisation.ParentId,
             };
-            await redisCache.SetAsync(cacheKeyById, organisationDto, TimeSpan.FromMinutes(10));
-            logger.LogInformation("Cached organisation with key: {CacheKey}", cacheKeyById);
+            await redisCache.SetAsync(cacheKey, organisationDto, TimeSpan.FromMinutes(10));
+            logger.LogInformation("Cached organisation with key: {CacheKey}", cacheKey);
 
             // 📌 Update caches based on ParentId or OrganisationType
             if (organisation.ParentId.HasValue)
