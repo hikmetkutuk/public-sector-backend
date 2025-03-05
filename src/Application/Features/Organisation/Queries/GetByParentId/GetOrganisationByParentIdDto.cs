@@ -29,6 +29,6 @@ public record GetOrganisationByParentIdDto
     public Guid? ProcedureRegionDefId { get; set; }
     public string? GeographicRegionDefName { get; set; }
     public string? ProcedureRegionDefName { get; set; }
-
+    public List<GetOrganisationByParentIdDto> Children { get; set; } = new List<GetOrganisationByParentIdDto>();
     public string TypeText => (OrganisationType).GetDescription();
 }
